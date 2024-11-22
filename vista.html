@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Petición HTTP</title>
+        <style>
+            body {
+              font-family: Arial, sans-serif;
+              text-align: center;
+              padding: 50px;
+            }
+            button {
+              padding: 10px 20px;
+              font-size: 16px;
+              cursor: pointer;
+            }
+            #response {
+              margin-top: 20px;
+              font-size: 14px;
+              color: #333;
+            }
+          </style>
+    </head>
+    <body>
+        <h1>Hacer una petición HTTP</h1>
+        <button id="fetchButton">Hacer Petición</button>
+        <div id="response">Presiona el botón para obtener una respuesta</div>
+        <script>
+            document.getElementById('fetchButton').addEventListener('click', async () => {
+            const responseDiv = document.getElementById('response');
+            responseDiv.textContent = 'Cargando...';
+
+            try {
+                const response = await fetch('http://localhost:8000/api/hello');
+                if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+                }
+                const data = await response.text(); // O .json() si sabes que la respuesta es JSON
+                responseDiv.textContent = `Respuesta del servidor: ${data}`;
+            } catch (error) {
+                responseDiv.textContent = `Error: ${error.message}`;
+            }
+            });
+        </script>
+    </body>
+</html>
